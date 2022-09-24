@@ -3,7 +3,7 @@ let cube = document.querySelector('.cube'), //поле
 
 cube.style.setProperty("--height", cubeWidth + 1 + 'px')
 
-let plank = cubeWidth / 3 - 9 + 'px';//одна клета поля
+let plank = cubeWidth / 3 - 12 + 'px';//одна клета поля
 
 let drop = document.createElement('span');
 
