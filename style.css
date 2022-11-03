@@ -23,14 +23,16 @@ body, html {
     width: 70%;
     height: var(--height);
     background: rgba(0, 0, 0, 0.5);
-    padding: 3px;
-    display: inline-flex;
-    flex-wrap: wrap;
+    padding: 6px 12px 12px 6px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 9px;
 }
 
 span {
-    width: var(--spanw);
-    height: var(--spanh);
+    width: 100%;
+    height: 100%;
     background: #222121;
     display: block;
     margin: 3px;
@@ -40,7 +42,7 @@ span {
     text-align: center;
     transition: .1s ease-in;
     user-select: none;
-    opacity: 0.8;
+    opacity: 0.95;
     text-align: center;
 }
 
@@ -76,12 +78,10 @@ span {
     position: absolute;
     top: 50%;
     left: 0;
-    z-index: 2;
+    z-index: -10;
     transform: translateY(-50%);
     font-size: 2em;
     font-family: Tahoma, sans-serif;
-    
-    display: none;
     
     --winColor: #71c5ba;
 }
@@ -89,7 +89,6 @@ span {
 .win {
     width: 25%;
     height: 100%;
-    left: 37.5%;
     background: var(--winColor);
     position: absolute;
     
@@ -115,7 +114,7 @@ span {
 }
 @media (max-width:1200px) {
     .wrap {
-        width: 80%;
+        height: 80%;
     }
 }
 @media (max-width:1152px) {
@@ -176,7 +175,7 @@ span {
         top: 0;
     }
     span {
-        font-size: 3em;
+        font-size: 2.7em;
     }
 }
     
@@ -202,15 +201,15 @@ span {
         top: -10%;
     }
     span {
-        font-size: 3em;
+        font-size: 2.5em;
     }
 }
 @media (max-width: 320px) {
     span{
-        font-size: 2.6em;
+        font-size: 2em;
     }   
 @media (max-width: 240px) {
     span{
-        font-size: 1.5em;
+        font-size: 1.2em;
     }
 }

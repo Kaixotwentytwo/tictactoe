@@ -1,79 +1,46 @@
 let cube = document.querySelector('.cube'), //поле
     cubeWidth = cube.clientWidth;
 
+setInterval(function() {
+    cube.style.setProperty("--height", document.querySelector('.cube').clientWidth + 1 + 'px');
+    winParent.style.width = `${window.outerWidth}px`;
+    winText.style.left = `${(winParent.clientWidth) / 2 - winText.clientWidth / 2}px`;
+    winText.style.setProperty('transform', 'translateX(0%)');
+}, 500)
 cube.style.setProperty("--height", cubeWidth + 1 + 'px')
-
-let plank = cubeWidth / 3 - 12 + 'px';//одна клета поля
-
-let drop = document.createElement('span');
-
-
-let i = 0;
-while (i<9) {
-    cube.appendChild(drop);
-    
-    let span = document.getElementsByTagName('span');
-    span[i].style.setProperty("--spanw", plank)
-    span[i].style.setProperty("--spanh", plank)
-
-    i++
-}
 
 let span = document.querySelectorAll('span');
 
 
-let winParent = document.querySelector('.win-parent'),
-    width = window.innerWidth + 'px';
-winParent.style.setProperty('--wdt', width)
+let winParent = document.querySelector('.win-parent');
 let winText = document.querySelector('.win'),
     winBG = document.querySelector('.bg');
     
+winText.style.left = `${(winParent.clientWidth) / 2 - winText.clientWidth / 2}px`;
+
 let queue = 0
 function click(queue) {
-    span[0].addEventListener('mouseover', overs)
-    span[1].addEventListener('mouseover', overs)
-    span[3].addEventListener('mouseover', overs)
-    span[2].addEventListener('mouseover', overs)
-    span[4].addEventListener('mouseover', overs)
-    span[5].addEventListener('mouseover', overs)
-    span[6].addEventListener('mouseover', overs)
-    span[7].addEventListener('mouseover', overs)
-    span[8].addEventListener('mouseover', overs)
-    
-    function overs(span) {
-        this.style.background = 'white'
+    for (let i = 0; i < span.length; i++) {
+        span[i].addEventListener('mouseover', overs)
+        span[i].addEventListener('mouseout', outs)
+        span[i].addEventListener('mousedown', deleted)
     }
     
-        span[0].addEventListener('mouseout', outs)
-        span[1].addEventListener('mouseout', outs)
-        span[2].addEventListener('mouseout', outs)
-        span[3].addEventListener('mouseout', outs)
-        span[4].addEventListener('mouseout', outs)
-        span[5].addEventListener('mouseout', outs)
-        span[6].addEventListener('mouseout', outs)
-        span[7].addEventListener('mouseout', outs)
-        span[8].addEventListener('mouseout', outs)
-
+    for (let i = 0; i < span.length; i++) {
+        span[i].addEventListener('mouseover', overs)
+    }
     
     function outs(span) {
-        this.style.background = 'gray'
+        this.style.background = 'gray';
     }
     
-    span[0].addEventListener('click', deleted)
-    span[1].addEventListener('click', deleted)
-    span[2].addEventListener('click', deleted)
-    span[3].addEventListener('click', deleted)
-    span[4].addEventListener('click', deleted)
-    span[5].addEventListener('click', deleted)
-    span[6].addEventListener('click', deleted)
-    span[7].addEventListener('click', deleted)
-    span[8].addEventListener('click', deleted)
+    function overs(span) {
+        this.style.background = '#f8ecec'
+    }
     
     let queueColor = document.querySelector('.queue');
     queueColor.style.setProperty('--queueColor', 'cornflowerblue');
     queueColor.innerHTML = "X";
-    
-    
 
 
     function deleted(span) {
@@ -87,7 +54,7 @@ function click(queue) {
         //who's turn
         if (queue == 0) {
             this.style.background = "crimson";
-            this.removeEventListener('click', deleted)
+            this.removeEventListener('mousedown', deleted)
             this.innerHTML = "O";
 
             queueColor.style.setProperty('--queueColor', 'cornflowerblue');
@@ -98,7 +65,7 @@ function click(queue) {
             queue = 1;
         } else {
             this.style.background = "cornflowerblue";
-            this.removeEventListener('click', deleted)
+            this.removeEventListener('mousedown', deleted)
             this.innerHTML = "X";
 
             queueColor.style.setProperty('--queueColor', 'crimson');
@@ -109,6 +76,7 @@ function click(queue) {
             queue = 0;
         };
         let spans = document.querySelectorAll('span')
+        
         function nulling() {
             let i = 0
             while (i < 9) {
@@ -131,18 +99,17 @@ function click(queue) {
         
         winBG.addEventListener('click', function() {
             this.style.display = "none";
-            winParent.style.display = "none";
-            winText.style.display = "none";})
+            winParent.style.zIndex = -10;
+        })
         
         winText.addEventListener('click', function() {
-            this.style.display = "none";
-            winParent.style.display = "none";
-            winBG.style.display = "none";})
+            winParent.style.zIndex = -10;
+            winBG.style.display = "none";
+        })
         
-            function winO() {
+    function winO() {
         winText.innerHTML = "Команда О победила";
-        winText.style.display = "block";
-        winParent.style.display = "block";
+        winParent.style.zIndex = 10;
         winBG.style.display = "block";
 
         winText.style.setProperty('--winColor', 'linear-gradient(25deg, crimson, #b5a4a4)');
@@ -150,8 +117,7 @@ function click(queue) {
 
     function winX() {
         winText.innerHTML = "Команда X  победила ";
-        winText.style.display = "block";
-        winParent.style.display = "block";
+        winParent.style.zIndex = 10;
         winBG.style.display = "block";
 
         winText.style.setProperty('--winColor', 'linear-gradient(70deg, cornflowerblue, #b5a4a4)');
@@ -159,8 +125,7 @@ function click(queue) {
     
     function draw() {
         winText.innerHTML = "Ничья";
-        winText.style.display = "block";
-        winParent.style.display = "block";
+        winParent.style.zIndex = 10;
         winBG.style.display = "block";
 
         winText.style.setProperty('--winColor', 'linear-gradient(25deg, #ffa700, #b5a4a4)');
